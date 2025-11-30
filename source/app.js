@@ -1,12 +1,17 @@
-require('dotenv').config();
-const express = require('express');
+import dotenv from "dotenv";
+import express from "express";
+import orderRoutes from "./routes/order.routes.js";
+
+dotenv.config();
 
 const app = express();
 
 app.use(express.json());
 
-app.get('/', (_req, res) => {
-  res.json({ message: 'API funcionando' });
+app.use("/", orderRoutes);
+
+app.get("/", (_req, res) => {
+  res.json({ message: "API funcionando" });
 });
 
-module.exports = app;
+export default app;

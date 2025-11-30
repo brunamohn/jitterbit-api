@@ -3,15 +3,17 @@ import dotenv from "dotenv";
 
 dotenv.config();
 
-async function initDB() {
-  const connection = await mysql.createConnection({
-    host: process.env.DB_HOST || "localhost",
-    user: process.env.DB_USER || "root",
-    password: process.env.DB_PASS || "",
-    database: process.env.DB_NAME || "jitterbit_db"
-  });
+export const pool = mysql.createPool({
+  host: process.env.DB_HOST || "localhost",
+  user: process.env.DB_USER || "root",
+  password: process.env.DB_PASS || "",
+  database: process.env.DB_NAME || "jitterbit_db"
+})
 
-  console.log("✅ Conectado ao MySQL!");
+async function initDB() {
+  const connection = await pool.getConnection();
+
+  console.log("Conectado ao MySQL!");
 
    // Criação da tabela Order
   await connection.execute(`
@@ -33,11 +35,11 @@ async function initDB() {
     );
   `);
 
-  console.log("✅ Tabelas criadas com sucesso!");
+  console.log("Tabelas criadas com sucesso!");
 
-  await connection.end();
+  await connection.release();
 }
 
 initDB().catch((err) => {
-  console.error("❌ Erro ao inicializar banco:", err);
+  console.error("Erro ao inicializar banco:", err);
 });
