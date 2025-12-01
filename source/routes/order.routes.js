@@ -1,7 +1,7 @@
 import { Router } from "express";
 import {
   createOrder,
-  //getOrderById,
+  getOrderById,
   //listOrders,
   //updateOrder,
   //deleteOrder
@@ -13,7 +13,7 @@ const router = Router();
 // Rotas da API
 router.post("/order", createOrder);
 
-//router.get("/order/:id", getOrderById);
+router.get("/order/:id", getOrderById);
 
 //router.get("/order/list", listOrders);
 

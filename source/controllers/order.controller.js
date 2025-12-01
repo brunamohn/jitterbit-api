@@ -2,6 +2,7 @@ import {
   saveOrder,
   saveItem,
   findOrderById,
+  findItemsByOrderId,
   findOrders,
   updateOrderById,
   deleteOrderById
@@ -40,6 +41,25 @@ export async function createOrder(req, res) {
 
   } catch (error) {
     console.error("Erro ao criar pedido:", error);
+    return res.status(500).json({ error: "Erro interno do servidor." });
+  }
+}
+
+
+//Buscar pedido por ID
+export async function getOrderById(req, res) {
+  try{
+    const { id } = req.params;
+
+    const order = await findOrderById(id);
+
+    if (!order) return res.status(404).json({ message: "Pedido não encontrado"});
+
+    const items = await findItemsByOrderId(id);
+
+    return res.json({ order, items });
+  } catch (error) {
+    console.error("Erro ao buscar pedido:", error);
     return res.status(500).json({ error: "Erro interno do servidor." });
   }
 }

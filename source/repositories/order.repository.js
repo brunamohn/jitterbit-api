@@ -26,6 +26,15 @@ export async function findOrderById(orderId) {
   return rows[0];
 }
 
+//Buscar items do pedido
+export async function findItemsByOrderId(orderId) {
+  const [rows] = await pool.execute(
+    " SELECT * FROM Items WHERE orderId = ?",
+    [orderId]
+  );
+  return rows;
+}
+
 //Listar todos os pedidos
 export async function findOrders() {
   const [rows] = await pool.execute("SELECT * FROM `Order`");
