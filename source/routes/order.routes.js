@@ -4,7 +4,7 @@ import {
   getOrderById,
   listOrders,
   updateOrder,
-  //deleteOrder
+  deleteOrder
 } from "../controllers/order.controller.js";
 
 
@@ -19,6 +19,6 @@ router.get("/order/:id", getOrderById);
 
 router.put("/order/:id", updateOrder);
 
-//router.delete("/order/:id", deleteOrder);
+router.delete("/order/:id", deleteOrder);
 
 export default router;

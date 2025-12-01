@@ -98,7 +98,6 @@ export async function listOrders(_req, res) {
 
 
 //Atualizar pedido
-
 export async function updateOrder(req, res) {
   try {
     const { id } = req.params;
@@ -111,7 +110,7 @@ export async function updateOrder(req, res) {
 
     await updateOrderById(id, valorTotal, new Date(dataCriacao));
 
-    // Delete itens antigos
+    // Deletar itens antigos
     await deleteItemsByOrderId(id);
 
     // Inserir os novos
@@ -133,5 +132,24 @@ export async function updateOrder(req, res) {
 }
 
 
+//Deletar pedido
+export async function deleteOrder(req, res) {
+  try {
+    const { id } = req.params;
+
+    const orderExists = await findOrderById(id);
+    if (!orderExists) {
+      return res.status(404).json({ message: "Pedido não encontrado" });
+    }
+
+    await deleteItemsByOrderId(id);
+    await deleteOrderById(id);
+
+    return res.json({ message: "Pedido deletado com sucesso" });
+  } catch (error) {
+    console.error("Erro ao deletar pedido:", error);
+    return res.status(500).json({ error: "Erro interno do servidor." });
+  }
+}
 
 
