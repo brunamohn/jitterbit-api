@@ -3,7 +3,7 @@ import {
   createOrder,
   getOrderById,
   listOrders,
-  //updateOrder,
+  updateOrder,
   //deleteOrder
 } from "../controllers/order.controller.js";
 
@@ -17,7 +17,7 @@ router.get("/order/list", listOrders);
 
 router.get("/order/:id", getOrderById);
 
-//router.put("/order/:id", updateOrder);
+router.put("/order/:id", updateOrder);
 
 //router.delete("/order/:id", deleteOrder);
 

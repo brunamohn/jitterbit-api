@@ -54,3 +54,7 @@ export async function deleteOrderById(orderId) {
   await pool.execute("DELETE FROM `Order` WHERE orderId = ?", [orderId]);
 }
 
+// Deletar itens de um pedido
+export async function deleteItemsByOrderId(orderId) {
+  await pool.execute("DELETE FROM `Items` WHERE orderId = ?", [orderId]);
+}
