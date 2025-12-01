@@ -1,4 +1,12 @@
-import { pool } from "../db.js";
+import {
+  saveOrder,
+  saveItem,
+  findOrderById,
+  findOrders,
+  updateOrderById,
+  deleteOrderById
+} from "../repositories/order.repository.js"
+
 
 // Criar pedido
 export async function createOrder(req, res) {
@@ -16,16 +24,15 @@ export async function createOrder(req, res) {
     const creationDate = new Date(dataCriacao);
 
     // Salvar pedido na tabela `Order`
-    await pool.execute(
-      "INSERT INTO `Order` (orderId, value, creationDate) VALUES (?, ?, ?)",
-      [orderId, value, creationDate]
-    );
+    await saveOrder(orderId, value, creationDate);
 
     // Salvar items na tabela Items
     for (const item of items) {
-      await pool.execute(
-        "INSERT INTO Items (orderId, productId, quantity, price) VALUES (?, ?, ?, ?)",
-        [orderId, item.idItem, item.quantidadeItem, item.valorItem]
+      await saveItem(
+        orderId,
+        item.idItem,
+        item.quantidadeItem,
+        item.valorItem
       );
     }
 
