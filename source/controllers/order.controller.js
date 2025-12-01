@@ -3,7 +3,7 @@ import {
   saveItem,
   findOrderById,
   findItemsByOrderId,
-  findOrders,
+  findAllOrders,
   updateOrderById,
   deleteOrderById
 } from "../repositories/order.repository.js"
@@ -63,3 +63,16 @@ export async function getOrderById(req, res) {
     return res.status(500).json({ error: "Erro interno do servidor." });
   }
 }
+
+
+//Listar todos os pedidos
+export async function listOrders(_req, res) {
+  try {
+    const orders = await findAllOrders();
+    return res.json(orders);
+  } catch (error) {
+    console.error("Erro ao listar todos os pedidos:", error);
+    return res.status(500).json({ error: "Erro interno do servidor." });
+  }
+}
+

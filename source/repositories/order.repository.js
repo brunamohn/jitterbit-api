@@ -36,7 +36,7 @@ export async function findItemsByOrderId(orderId) {
 }
 
 //Listar todos os pedidos
-export async function findOrders() {
+export async function findAllOrders() {
   const [rows] = await pool.execute("SELECT * FROM `Order`");
   return rows;
 }
